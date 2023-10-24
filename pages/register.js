@@ -11,12 +11,17 @@ import fetch from 'isomorphic-unfetch';
 
 export default function Home({}) {
   useEffect(() => {
-    // You might want to wrap this in a function
-    async function registerWebhook() {
-    }
-  
-    registerWebhook();
-  }, [1000]);
+    const socket = io();
+
+    socket.on('event', (data) => {
+      console.log('Event received:', data);
+      // Here you can set the state or call functions in your component
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   
 
 }
@@ -24,28 +29,28 @@ export default function Home({}) {
 export async function getStaticProps({ params }) {
     const { db } = await connectToDatabase();
 
-    const params2 = {
-      'licenseKey': '62e448abcd415a26',
-      'serviceId': 'CS2',
-    };
+    try {
+      const params2 = {
+        'licenseKey': process.env.NEXT_PUBLIC_LICENSE_KEY,
+        'serviceId': 'CS2',
+      };
 
-    const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense?licenseKey=62e448abcd415a26&serviceId=CS2', { params2 });
-    console.log(response.data);
-    const responseData = response.data;
+      const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense', { params: params2 });
+      console.log('Validation Response:', response.data);
+      const responseData = response.data;
 
-    const paramsToRegister = {
-      'licenseKey': '62e448abcd415a26',
-      'serviceId': 'default',
-      'secret': '62e448abcd415a26',
-      'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
-      'gameProcess': 'cs2.exe'
-    };
+      const paramsToRegister = {
+        'licenseKey': responseData.licenseKey,
+        'serviceId': 'default',
+        'secret': process.env.NEXT_PUBLIC_SECRET,
+        'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
+        'gameProcess': 'cs2.exe'
+      };
 
-    const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', { paramsToRegister });
-    console.log(responseFromRegister.data);
-  
-    return {
-        props: { },
-        revalidate: 1
-    };
-}
+      const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', paramsToRegister);
+      console.log('Registration Response:', responseFromRegister.data);
+    } catch (error) {
+      console.error('Error registering webhook:', error);
+    }
+
+  }
