@@ -11,12 +11,11 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
   const httpServer = http.createServer(server);
-  const io = require('socket.io')(httpServer, {
+  const io = socketIo(httpServer, {
     cors: {
-      origin: '*',
-      methods: ['GET', 'POST']
-    },
-    transports: ['websocket'] // Ensure WebSocket is enabled
+      origin: `https://king-prawn-app-9ucth.ondigitalocean.app`,
+      methods: ["GET", "POST"]
+    }
   });
 
   io.on('connection', (socket) => {
