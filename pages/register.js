@@ -53,4 +53,9 @@ export async function getStaticProps({ params }) {
       console.error('Error registering webhook:', error);
     }
 
-  }
+    return {
+      props: {
+        events: [],
+      },
+    };
+}
