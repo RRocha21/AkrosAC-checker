@@ -7,23 +7,16 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const Cors = require('cors');
 
 app.prepare().then(() => {
-  // const server = require('http').createServer(app);
-  // const httpServer = http.createServer(server);
-  const server = http.createServer(app);
-  const expressApp = express();
-
-  const io = socketIo(server, {
+  const server = express();
+  const httpServer = http.createServer(server);
+  const io = socketIo(httpServer, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        }
+      origin: `https://king-prawn-app-9ucth.ondigitalocean.app`,
+      methods: ["GET", "POST"]
     }
-  );
-
-  expressApp.use(cors());
+  });
 
   io.on('connection', (socket) => {
     console.log('Client connected');
@@ -34,11 +27,11 @@ app.prepare().then(() => {
     });
   });
 
-  expressApp.all('*', (req, res) => {
+  server.all('*', (req, res) => {
     return handle(req, res);
   });
 
-  server.listen(port, (err) => {
+  httpServer.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
