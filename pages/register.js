@@ -44,7 +44,7 @@ export async function getStaticProps({ params }) {
       const paramsToRegister = {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
-        'secret': process.env.NEXT_PUBLIC_SECRET,
+        'secret': 'secretshitout',
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
