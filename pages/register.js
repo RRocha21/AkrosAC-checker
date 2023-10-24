@@ -10,6 +10,14 @@ import fetch from 'isomorphic-unfetch';
 
 
 export default function Home({}) {
+  useEffect(() => {
+    // You might want to wrap this in a function
+    async function registerWebhook() {
+    }
+  
+    registerWebhook();
+  }, [1000]);
+  
 
 }
 
@@ -26,16 +34,15 @@ export async function getStaticProps({ params }) {
     const responseData = response.data;
 
     const paramsToRegister = {
-      'licenseKey': responseData.licenseKey,
+      'licenseKey': '62e448abcd415a26',
       'serviceId': 'default',
       'secret': '62e448abcd415a26',
-      'callbackUrl': 'http://localhost:3000/events',
+      'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
       'gameProcess': 'cs2.exe'
     };
 
     const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', { paramsToRegister });
     console.log(responseFromRegister.data);
-
   
     return {
         props: { },
