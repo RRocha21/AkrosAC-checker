@@ -9,10 +9,11 @@ import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
 import io from 'socket.io-client';
 
+const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io();
+    const socket = io("http://localhost:{port}");
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
