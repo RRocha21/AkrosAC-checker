@@ -23,8 +23,9 @@ export default function Home({}) {
     return () => {
       socket.disconnect();
     };
-  }, [1000]);  
+  }, []);
   
+
 }
 
 export async function getStaticProps({ params }) {

@@ -11,7 +11,13 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
   const httpServer = http.createServer(server);
-  const io = require('socket.io')(httpServer);
+  const io = require('socket.io')(httpServer, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST']
+    },
+    transports: ['websocket'] // Ensure WebSocket is enabled
+  });
 
   io.on('connection', (socket) => {
     console.log('Client connected');
