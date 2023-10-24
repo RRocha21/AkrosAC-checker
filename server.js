@@ -1,5 +1,4 @@
 const express = require('express');
-// const app = express();
 const http = require('http');
 const next = require('next');
 const socketIo = require('socket.io');
@@ -8,22 +7,20 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-onst Cors = require('cors');
 
 app.prepare().then(() => {
-  const httpServer = http.createServer(server2);
+  const server = express();
+  const httpServer = http.createServer(server);
+  const io = require('socket.io')(httpServer);
 
-  const server3 = require('http').createServer(app);
-  
-  const io = require("socket.io")(server, {
-      cors: {
-          origin: "*",
-          methods: ["GET", "POST", "PUT", "DELETE"],
-          }
-      }
-  );
-  
-  app.use(Cors());
+  io.on('connection', (socket) => {
+    console.log('Client connected');
+    // You can emit events to your clients here
+    // Example: socket.emit('event', { data: 'some data' });
+    socket.on('disconnect', () => {
+      console.log('Client disconnected');
+    });
+  });
 
   server.all('*', (req, res) => {
     return handle(req, res);
