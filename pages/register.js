@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io(`http://localhost:8080`);
+    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app:8080`);
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
