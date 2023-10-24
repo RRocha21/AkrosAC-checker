@@ -7,6 +7,7 @@ import tmi from 'tmi.js';
 import 'dotenv/config';
 import axios from 'axios';
 import fetch from 'isomorphic-unfetch';
+import io from 'socket.io-client';
 
 
 export default function Home({}) {
