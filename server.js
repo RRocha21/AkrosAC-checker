@@ -7,16 +7,23 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const Cors = require('cors');
 
 app.prepare().then(() => {
-  const server = express();
-  const httpServer = http.createServer(server);
-  const io = socketIo(httpServer, {
+  // const server = require('http').createServer(app);
+  // const httpServer = http.createServer(server);
+  const server = http.createServer(app);
+  const expressApp = express();
+
+  const io = socketIo(server, {
     cors: {
-      origin: '*',
-      methods: ["GET", "POST"]
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        }
     }
-  });
+  );
+
+  expressApp.use(cors());
 
   io.on('connection', (socket) => {
     console.log('Client connected');
@@ -27,11 +34,11 @@ app.prepare().then(() => {
     });
   });
 
-  server.all('*', (req, res) => {
+  expressApp.all('*', (req, res) => {
     return handle(req, res);
   });
 
-  httpServer.listen(port, (err) => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
   });
