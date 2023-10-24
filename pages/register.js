@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io("http://localhost:{port}");
+    const socket = io(`http://localhost:${port}`);
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
