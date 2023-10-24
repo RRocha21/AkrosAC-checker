@@ -30,7 +30,7 @@ export default function Home({}) {
 
 export async function getStaticProps({ params }) {
     const { db } = await connectToDatabase();
-
+    console.log('PUTA QUE PARIU')
     try {
       const params2 = {
         'licenseKey': process.env.NEXT_PUBLIC_LICENSE_KEY,
