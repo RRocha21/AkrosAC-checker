@@ -33,7 +33,7 @@ export async function getStaticProps({ params }) {
 
     try {
       const params2 = {
-        'licenseKey': process.env.NEXT_PUBLIC_LICENSE_KEY,
+        'licenseKey': '62e448abcd415a26',
         'serviceId': 'CS2',
       };
 
@@ -44,7 +44,7 @@ export async function getStaticProps({ params }) {
       const paramsToRegister = {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
-        'secret': process.env.NEXT_PUBLIC_SECRET,
+        'secret': 'secretforwebhook',
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
