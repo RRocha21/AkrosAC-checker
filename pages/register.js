@@ -33,18 +33,18 @@ export async function getStaticProps({ params }) {
     console.log('PUTA QUE PARIU')
     try {
       const params2 = {
-        'licenseKey': process.env.NEXT_PUBLIC_LICENSE_KEY,
+        'licenseKey': '62e448abcd415a26',
         'serviceId': 'CS2',
       };
 
-      const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense?licenseKey=62e448abcd415a26&serviceId=CS2', { params: params2 });
+      const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense', { params: params2 });
       console.log('Validation Response:', response.data);
       const responseData = response.data;
 
       const paramsToRegister = {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
-        'secret': process.env.NEXT_PUBLIC_SECRET,
+        'secret': 'newSecretCRL',
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
