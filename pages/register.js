@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app:8080`);
+    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
@@ -37,12 +37,12 @@ export async function getStaticProps({ params }) {
         'serviceId': 'CS2',
       };
 
-      const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense', { params: params2 });
+      const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense?licenseKey=62e448abcd415a26&serviceId=CS2', { params: params2 });
       console.log('Validation Response:', response.data);
       const responseData = response.data;
 
       const paramsToRegister = {
-        'licenseKey': responseData.licenseKey,
+        'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
         'secret': process.env.NEXT_PUBLIC_SECRET,
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
