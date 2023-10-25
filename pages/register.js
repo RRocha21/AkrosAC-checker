@@ -45,7 +45,7 @@ export default function Home({}) {
       const username = await getSteamUsername('76561198262506391');
       if (data.data?.userId) {
         console.log('User ID:', data.data.userId)
-        const username = getSteamUsername(data.data.userId);
+        const username = await getSteamUsername(data.data.userId);
         console.log('Username:', username);
       }
     });
