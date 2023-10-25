@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 async function getSteamUsername(steamUID) {
   const apiKey = '8D84EBFF5DCB6429F357949D448F406F';
-  const url = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamUID}`;
+  const url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamUID}`;
   console.log('URL:', url);
   try {
     const response = await axios.get(url);
@@ -43,14 +43,14 @@ export default function Home({}) {
       console.log('Event received:', data);
       // Here you can set the state or call functions in your component
       const username = await getSteamUsername('76561198262506391');
+      console.log('Username:', username);
       if (data.data?.userId) {
         console.log('User ID:', data.data.userId)
         const username = await getSteamUsername(data.data.userId);
         console.log('Username:', username);
       }
     });
-    
-    // if ()
+
 
 
     return () => {
@@ -58,6 +58,9 @@ export default function Home({}) {
     };
   }, []);
   
+  return{
+
+  }
 
 }
 
