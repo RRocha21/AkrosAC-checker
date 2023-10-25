@@ -17,10 +17,9 @@ app.use(Cors());
 
 
 
-app.listen(3000, async () => {
+app.listen(8080, async () => {
     try {
-        const {db} = await connectToDatabase();
-        let staticOverlays = await db.collection('staticoverlays').find({}).toArray();
+        // const {db} = await connectToDatabase();
         console.log('listening on *:3000');
     } catch (error) {
         console.log(error);
