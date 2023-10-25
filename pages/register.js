@@ -47,24 +47,23 @@ export default function Home() {
         setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId }]);
       }
     });
-    getSteamUsername('76561198025045830').then((username) => {
-      console.log('Username:', username);
-    });
+
     const updateInterval = setInterval(() => {
-      setBuffer((prevBuffer) => {
+      setBuffer(async (prevBuffer) => {
         if (prevBuffer.length > 0) {
           const { userId, actionId } = prevBuffer[0];
           console.log('Processing buffer:', userId, actionId);
           if (actionId === 3) {
+            const username = await getSteamUsername(userId)
             setUsernames((prevUsernames) => {
-              if (!prevUsernames.includes(userId)) {
-                return [...prevUsernames, userId];
+              if (!prevUsernames.includes(username)) {
+                return [...prevUsernames, username];
               }
               return prevUsernames;
             });
           } else if (actionId === 4) {
             setUsernames((prevUsernames) => {
-              return prevUsernames.filter((u) => u !== userId);
+              return prevUsernames.filter((u) => u !== username);
             });
           }
           return prevBuffer.slice(1);
