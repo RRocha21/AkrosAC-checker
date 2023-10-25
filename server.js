@@ -5,6 +5,7 @@ const http = require('http');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const socket = require('./util/socket');
 
 app.prepare().then(() => {
   const server = express();
