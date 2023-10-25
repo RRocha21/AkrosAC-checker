@@ -11,10 +11,10 @@ import io from 'socket.io-client';
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 
-const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
-
 export default function Home({}) {
   useEffect(() => {
+    // const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`, { transports: ['websocket'] });
+    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
@@ -24,9 +24,8 @@ export default function Home({}) {
     return () => {
       socket.disconnect();
     };
-  }, [1000]);
+  }, [1000]);  
   
-
 }
 
 export async function getStaticProps({ params }) {
@@ -45,7 +44,7 @@ export async function getStaticProps({ params }) {
       const paramsToRegister = {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
-        'secret': 'secretshitout',
+        'secret': 'testshitout',
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
