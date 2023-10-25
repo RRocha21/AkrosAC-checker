@@ -11,7 +11,7 @@ app.prepare().then(() => {
   const httpServer = http.createServer(server);
   
   // Integrate socket.js here
-  require('./socket.js')(httpServer);
+  require('./util/socket.js')(httpServer);
   
   server.all('*', (req, res) => {
     return handle(req, res);
