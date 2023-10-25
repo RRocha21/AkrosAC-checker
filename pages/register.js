@@ -13,7 +13,9 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
+    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`, {
+      transports: ['websocket'],
+    });
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
