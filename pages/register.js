@@ -50,6 +50,7 @@ export default function Home({}) {
         console.log('Username:', username);
       }
     });
+    
 
 
 
@@ -58,9 +59,6 @@ export default function Home({}) {
     };
   }, []);
   
-  return{
-
-  }
 
 }
 
