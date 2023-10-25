@@ -42,7 +42,7 @@ export default function Home() {
       const userId = data.data?.userId;
       const actionId = data.id;
       const gameProcess = data.data?.gameProcess;
-      const usename = await getSteamUsername(userId);
+      const username = await getSteamUsername(userId);
       if (userId && actionId && username) {
         setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId, username }]);
       }
