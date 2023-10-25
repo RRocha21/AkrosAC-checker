@@ -5,14 +5,13 @@ const http = require('http');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const server = express();
-const httpServer = http.createServer(server);
-const socket = require('./util/socket');
-const io = socket.init(httpServer);
 
 app.prepare().then(() => {
+  const server = express();
+  const httpServer = http.createServer(server);
   
   // Integrate socket.js here
+  require('./util/socket.js')(httpServer);
   
   server.all('*', (req, res) => {
     return handle(req, res);
