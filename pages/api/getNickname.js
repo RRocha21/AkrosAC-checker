@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
 async function authorize() {
   const auth = new google.auth.GoogleAuth({
-    keyFile: '../../public/akrosac-37c432f5c235.json', // Update this with the path to your credentials file
+    keyFile: './akrosac-37c432f5c235.json', // Update this with the path to your credentials file
     scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
   });
 
