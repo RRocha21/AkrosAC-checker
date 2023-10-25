@@ -1,13 +1,25 @@
-// server.js
-const http = require('http');
 const express = require('express');
-const app = express();
-const server = http.createServer(app);
-const socket = require('./util/socket.js');
+const next = require('next');
+const http = require('http');
+
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
+const server = express();
+const httpServer = http.createServer(server);
+const socket = require('./util/socket');
 const io = socket.init(server);
 
-// Make sure the rest of your server setup is here
+app.prepare().then(() => {
+  
+  // Integrate socket.js here
+  
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
 
-server.listen(8080, () => {
-  console.log('Server is running on port 8080');
+  httpServer.listen(8080, (err) => {
+    if (err) throw err;
+    console.log('> Ready on http://localhost:8080');
+  });
 });
