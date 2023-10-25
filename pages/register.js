@@ -47,7 +47,9 @@ export default function Home() {
         setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId }]);
       }
     });
-
+    getSteamUsername('76561198025045830').then((username) => {
+      console.log('Username:', username);
+    });
     const updateInterval = setInterval(() => {
       setBuffer((prevBuffer) => {
         if (prevBuffer.length > 0) {
