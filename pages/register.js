@@ -30,23 +30,21 @@ async function getSteamUsername(steamUID) {
 
 export default function Home() {
   const [usernames, setUsernames] = useState([]);
-  const [buffer, setBuffer] = useState([]); // to temporarily store incoming user IDs
+  const [buffer, setBuffer] = useState([]);
+  const socketRef = useRef(null); // useRef to keep the socket instance
 
   useEffect(() => {
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
-    socket.connect();
+    socketRef.current = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
+    socketRef.current.connect();
 
-    socket.on('event', (data) => {
+    socketRef.current.on('event', (data) => {
       console.log('Event received:', data);
-
       const userId = data.data?.userId;
-      const actionId = data.id; // assuming you get actionId (3 for add, 4 for remove)
+      const actionId = data.id;
+      const gameProcess = data.data?.gameProcess;
 
       if (userId && actionId) {
-        setBuffer((prevBuffer) => {
-          const updatedBuffer = [...prevBuffer, { userId, actionId }];
-          return updatedBuffer;
-        });
+        setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId }]);
       }
     });
 
@@ -54,6 +52,7 @@ export default function Home() {
       setBuffer((prevBuffer) => {
         if (prevBuffer.length > 0) {
           const { userId, actionId } = prevBuffer[0];
+          console.log('Processing buffer:', userId, actionId);
           if (actionId === 3) {
             setUsernames((prevUsernames) => {
               if (!prevUsernames.includes(userId)) {
@@ -70,11 +69,11 @@ export default function Home() {
         }
         return prevBuffer;
       });
-    }, 5000);
+    }, 30000); // 30 seconds interval
 
     return () => {
       clearInterval(updateInterval);
-      socket.disconnect();
+      if (socketRef.current) socketRef.current.disconnect();
     };
   }, []);
 
