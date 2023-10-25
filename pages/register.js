@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { connectToDatabase } from '../util/mongodb'
 import styled from 'styled-components'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef  } from 'react'
 import socketIOClient from 'socket.io-client';
 import tmi from 'tmi.js';
 import 'dotenv/config';
