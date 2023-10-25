@@ -98,6 +98,12 @@ export async function getStaticProps({ params }) {
         'serviceId': 'CS2',
       };
 
+      const responseFromUnregister = await axios.delete('https://secure-api.akros.ac/v1/IWebHook/Unregister?secret=testshitout&uri=https://king-prawn-app-9ucth.ondigitalocean.app/api/events');
+      console.log('Registration Response:', responseFromUnregister.data);
+
+      const responseFromUnregister2 = await axios.delete('https://secure-api.akros.ac/v1/IWebHook/Unregister?secret=testshitout&uri=https://king-prawn-app-9ucth.ondigitalocean.app/api/events');
+      console.log('Registration Response:', responseFromUnregister2.data);
+
       const response = await axios.get('https://secure-api.akros.ac/v1/ISession/ValidateLicense?licenseKey=62e448abcd415a26&serviceId=CS2', { params: params2 });
       console.log('Validation Response:', response.data);
       const responseData = response.data;
