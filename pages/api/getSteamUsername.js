@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { steamUID } = req.query;
     const apiKey = '8D84EBFF5DCB6429F357949D448F406F';
-    const url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=76561198262506391`;
+    const url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamUID}`;
 
     try {
       const response = await axios.get(url);
