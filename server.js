@@ -10,8 +10,14 @@ app.prepare().then(() => {
   const server = express();
   const httpServer = http.createServer(server);
   
-  // Integrate socket.js here
-  require('./util/socket.js')(httpServer);
+  // Integrate socket.js here and store the return value (io)
+  const io = require('./util/socket.js')(httpServer);
+  
+  // Make io accessible in API routes
+  server.use((req, res, next) => {
+    req.io = io;
+    return next();
+  });
   
   server.all('*', (req, res) => {
     return handle(req, res);
