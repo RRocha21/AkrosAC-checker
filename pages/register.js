@@ -30,40 +30,50 @@ async function getSteamUsername(steamUID) {
 
 export default function Home() {
   const [usernames, setUsernames] = useState([]);
-  const [events, setEvents] = useState([]); // assuming you need to use events
+  const [buffer, setBuffer] = useState([]); // to temporarily store incoming user IDs
 
   useEffect(() => {
     const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
     socket.connect();
 
-    socket.on('event', async (data) => {
+    socket.on('event', (data) => {
       console.log('Event received:', data);
 
       const userId = data.data?.userId;
       const actionId = data.id; // assuming you get actionId (3 for add, 4 for remove)
-      // const username = await getSteamUsername('76561198262506391');
-      // console.log('Username:', username);
+
       if (userId && actionId) {
-        // const username = await getSteamUsername(userId);
-        // console.log('Username:', username);
-        if ( actionId === 3) {
-          // Add username to array if not already present
-          setUsernames((prevUsernames) => {
-            if (!prevUsernames.includes(userId)) {
-              return [...prevUsernames, userId];
-            }
-            return prevUsernames;
-          });
-        } else if (actionId === 4) {
-          // Remove username from array if present
-          setUsernames((prevUsernames) => {
-            return prevUsernames.filter((u) => u !== userId);
-          });
-        }
+        setBuffer((prevBuffer) => {
+          const updatedBuffer = [...prevBuffer, { userId, actionId }];
+          return updatedBuffer;
+        });
       }
     });
 
+    const updateInterval = setInterval(() => {
+      setBuffer((prevBuffer) => {
+        if (prevBuffer.length > 0) {
+          const { userId, actionId } = prevBuffer[0];
+          if (actionId === 3) {
+            setUsernames((prevUsernames) => {
+              if (!prevUsernames.includes(userId)) {
+                return [...prevUsernames, userId];
+              }
+              return prevUsernames;
+            });
+          } else if (actionId === 4) {
+            setUsernames((prevUsernames) => {
+              return prevUsernames.filter((u) => u !== userId);
+            });
+          }
+          return prevBuffer.slice(1);
+        }
+        return prevBuffer;
+      });
+    }, 5000);
+
     return () => {
+      clearInterval(updateInterval);
       socket.disconnect();
     };
   }, []);
@@ -72,7 +82,7 @@ export default function Home() {
     <div>
       <h1>Usernames</h1>
       {usernames.length > 0 ? (
-        <p>{usernames.join(', ')}</p>
+        <div>{usernames.map((username) => <div key={username}>{username}</div>)}</div>
       ) : (
         <p>No usernames available</p>
       )}
