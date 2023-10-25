@@ -22,9 +22,9 @@ app.prepare().then(() => {
     console.log('Client connected');
     // You can emit events to your clients here
     // Example: socket.emit('event', { data: 'some data' });
-    socket.on('disconnect', () => {
-      console.log('Client disconnected');
-    });
+    // socket.on('disconnect', () => {
+    //   console.log('Client disconnected');
+    // });
   });
 
   server.all('*', (req, res) => {
