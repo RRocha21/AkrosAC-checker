@@ -1,5 +1,6 @@
 // pages/api/getNickname.js
 import { google } from 'googleapis';
+const path = require('path');
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -46,10 +47,14 @@ export default async function handler(req, res) {
 }
 
 async function authorize() {
-  const auth = new google.auth.GoogleAuth({
-    keyFile: './akrosac-37c432f5c235.json', // Update this with the path to your credentials file
-    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-  });
 
-  return await auth.getClient();
+    const credentialsPath = path.resolve(__dirname, 'credentials.json');
+    console.log('Attempting to load credentials from:', credentialsPath);
+
+    const auth = new google.auth.GoogleAuth({
+        keyFile: credentialsPath, // Update this with the path to your credentials file
+        scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+    });
+
+    return await auth.getClient();
 }
