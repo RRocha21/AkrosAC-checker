@@ -24,7 +24,7 @@ export default function Home({}) {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [1000]);
   
 
 }
