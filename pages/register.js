@@ -14,10 +14,11 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 async function getSteamUsername(steamUID) {
   const apiKey = '8D84EBFF5DCB6429F357949D448F406F';
   const url = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamUID}`;
-
+  console.log('URL:', url);
   try {
     const response = await axios.get(url);
-    const players = response.data.response.players;
+    console.log('Response:', response);
+    const players = response.players;
     if (players.length > 0) {
       const username = players[0].personaname;
       console.log('Steam Username:', username);
