@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "akrosac",
+  "private_key_id": "37c432f5c235d2977298555c75e7c2ac62f3fe1e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0vCEx7hF+3895\nSJvQ+9GS1P3RcPZV15LLZFxk25/C9Uz+W1JvyMqwjmuiRvq8ccXt4xN6iC8QLPC0\nWicT+ybz4B5QKXVpgALbUJRs7vGlNFjxzOctS2FSj3TW96VvG5YoBELHGd36vQYJ\nRkscm5urGafVZaW29Ql1eC3iyALVWRpZM60XfPzO+zZT7G8WK/A3vRvQE+gBRr7O\nFCpp39pQofTK3yrezHbgMALSR4Fx9Eub8kJW8c2YClUGOXQOIyp8tLAyZ2oOf0ZM\n3zP41/9ndhOYPLh1x80Vi7TLbIw1hmZTc3eybqAj74dj5p9qNJm0subaeoQTH92v\nCEZ21QJ/AgMBAAECggEAVjq8C7puFn5p2o/N57N9lfSQ9PBUVzh3DRthCa3PV5D5\nnxGrDzJZoksRB2eeEXKm4IzKqld3PNx0K1gn9NyLBSgUzmI5ZpBwzHpxlleaaxvC\no/sDARVJ5b4UHMwi3hPnXEhMI/ovcoXk71/eTlPfvY6MCMBqhBP841LncZ/D2k3P\nh2owb4WuIqygKaLVlflBRf1AQdIURBSiz/YZe0Ok3rbhY/jPV7IlzBHbbeAIb7dN\nDu3R7IkF3BLYecHhl0ugZ3o4hnGwfvc0+rEUeUZPLcsyk2LmcDaaRdb8ddQ1LFXG\nkKt6ucCE4YFCiaBachm4bMEb/LP2xugMvmmuytr0wQKBgQDXT6cfmBxrqdmSBDos\nZYzfUKIxgM/JPc5HQvw9sKDGjqOayB9oWRMfzx+qcMUY71Qf3x+krYG6ryODwIK3\ne9rX3TEH6hnxOA57PlKdlOigesD4SvuuEXJ2Yx7mJbKHePXgtPzd01tuSg7245OT\nCzL4AVPSHryIyo0N7qEiy953SQKBgQDW474SFbYPt7GmOZlP4Zc+wfrNf3yHpDAR\nVBFDytsw82GdBl2/Tw2wjUi+TGP/hMGquHGKWnSbPEZwwXQY8nTt9afgvIs+3cdh\n4kFm+6v4KDFzvGzgcpIZx6s9sWmgppk1oCZFupDdRrfCOTwwV6Lu5yKeuTAmOhNB\nqmiJpOxDhwKBgQDWRDM5csOdtOqKr+BAfFKjjXfLMbgWOYaFTjj9Hz/wONTBXLQ8\nwKASgKmvkQfj14/tI7s2w2Adqtr562NqOzw+o6V+jc6BSdrHdO78WMrjoSVWMjCi\nOkShYeTG/e7beFmf5Bzcl9AeQl7//NvIclWnjpKewO24Z3HV0orSuPVL2QKBgFbR\noINR/kKPZtjPwJ9Dd4XFfXz1Guz6auk1W9xV4wT979wvLEUUvWUtT8yCtIwRqOU+\nq7DIJwBo89SudCd4HcHeVDs6Mc/ubpWfgekHmU0jgAdQg3STFXAQ+aBtQ03CwXen\nAo99dvXPkoKH+UdWwN9gxt311/w5znnjTWT/Gu2VAoGAT9Qo0Tad0R2rYnKJDwtb\nFVc0A40c52Onxc1ixd/vX6yDB16DANmiokh7zQFIclGSNvRJusOwC4Xrg3FLffPM\nwTY7U4yV6ZZDrqygZf7YIeZLHLOXHBBPKLXAgG2u3m1+UusBHgU2Z4GOoEjZcrfV\nhbqFaA2yONVfzBm2nX6jkVg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "akrosac@akrosac.iam.gserviceaccount.com",
+  "client_id": "113890425250927744198",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/akrosac%40akrosac.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

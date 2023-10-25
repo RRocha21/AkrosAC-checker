@@ -27,6 +27,22 @@ async function getSteamUsername(steamUID) {
   }
 }
 
+async function getNickname(steamUID) {
+  try {
+    const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getNickname?steamUID=${steamUID}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data.nickname;
+    } else {
+      console.error('Nickname not found');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error retrieving nickname:', error);
+    return null;
+  }
+}
+
 
 export default function Home() {
   const [usernames, setUsernames] = useState([]);
@@ -42,7 +58,7 @@ export default function Home() {
       const userId = data.data?.userId;
       const actionId = data.id;
       const gameProcess = data.data?.gameProcess;
-      const username = await getSteamUsername(userId);
+      const username = await getNickname(userId);
       if (userId && actionId && username) {
         setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId, username }]);
       }
