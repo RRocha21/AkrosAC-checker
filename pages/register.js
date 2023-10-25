@@ -13,9 +13,8 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`, {
-      transports: ['websocket'],
-    });
+    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
+    socket.connect()
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
@@ -50,7 +49,7 @@ export async function getStaticProps({ params }) {
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
-
+      
       const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', paramsToRegister);
       console.log('Registration Response:', responseFromRegister.data);
     } catch (error) {

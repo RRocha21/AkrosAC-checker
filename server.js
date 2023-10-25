@@ -13,7 +13,7 @@ app.prepare().then(() => {
   const httpServer = http.createServer(server);
   const io = socketIo(httpServer, {
     cors: {
-      origin: 'https://king-prawn-app-9ucth.ondigitalocean.app',
+      origin: '*',
       methods: ["GET", "POST"]
     }
   });
