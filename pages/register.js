@@ -51,7 +51,7 @@ export async function getStaticProps({ params }) {
         'gameProcess': 'cs2.exe'
       };
 
-      const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Unregister', paramsToRegister);
+      const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', paramsToRegister);
       console.log('Registration Response:', responseFromRegister.data);
     } catch (error) {
       console.error('Error registering webhook:', error);
