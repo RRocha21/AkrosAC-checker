@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 export default function Home({}) {
   useEffect(() => {
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`, {
+    const socket = io(`wss://king-prawn-app-9ucth.ondigitalocean.app`, {
       transports: ['websocket'],
     });
 
@@ -21,7 +21,7 @@ export default function Home({}) {
       console.log('Event received:', data);
       // Here you can set the state or call functions in your component
     });
-
+    
     return () => {
       socket.disconnect();
     };
@@ -46,12 +46,12 @@ export async function getStaticProps({ params }) {
       const paramsToRegister = {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
-        'secret': process.env.NEXT_PUBLIC_SECRET,
+        'secret': 'testshitout',
         'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
 
-      const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', paramsToRegister);
+      const responseFromRegister = await axios.delete('https://secure-api.akros.ac/v1/IWebHook/Unregister?secret=testshitout&uri=https://king-prawn-app-9ucth.ondigitalocean.app/api/events', paramsToRegister);
       console.log('Registration Response:', responseFromRegister.data);
     } catch (error) {
       console.error('Error registering webhook:', error);
