@@ -16,8 +16,8 @@ export default async function handler(req, res) {
       const sheets = google.sheets({ version: 'v4', auth });
 
       // ID of the Google Sheets document and the name of the sheet.
-      const spreadsheetId = 'AkrosAC';
-      const range = 'Sheet1!A:B';  // Update with your range. Assuming column A has SteamUIDs and B has nicknames.
+      const spreadsheetId = '1GcB2hrsFo2KqTS_HyUENS3wvJN74-kUOp42r_dq11w0';
+      const range = 'Sheet1!F:H';  // Update with your range. Assuming column A has SteamUIDs and B has nicknames.
 
       const response = await sheets.spreadsheets.values.get({ spreadsheetId, range });
       const rows = response.data.values;
@@ -29,6 +29,7 @@ export default async function handler(req, res) {
         // and index 0 to find the nickname (F is the 1st column in the range F:H)
         const nicknameRow = rows.find(row => row[2] === steamUID);
         if (nicknameRow) {
+            console.log('enviado:', nicknameRow[0]);
           return res.status(200).json({ nickname: nicknameRow[0] });
         } else {
           return res.status(404).json({ error: 'Nickname not found' });
@@ -47,7 +48,7 @@ export default async function handler(req, res) {
 }
 
 async function authorize() {
-    const credentialsPath = path.resolve(__dirname, 'credentials.json');
+    const credentialsPath = path.resolve(__dirname, '../../../../credentials.json');
     console.log('Attempting to load credentials from:', credentialsPath);
     
     const auth = new google.auth.GoogleAuth({

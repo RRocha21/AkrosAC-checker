@@ -29,7 +29,7 @@ async function getSteamUsername(steamUID) {
 
 async function getNickname(steamUID) {
   try {
-    const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getNickname?steamUID=${steamUID}`);
+    const response = await fetch(`/api/getNickname?steamUID=${steamUID}`);
     if (response.ok) {
       const data = await response.json();
       return data.nickname;
@@ -48,7 +48,6 @@ export default function Home() {
   const [usernames, setUsernames] = useState([]);
   const [buffer, setBuffer] = useState([]);
   const socketRef = useRef(null); // useRef to keep the socket instance
-
   useEffect(() => {
     socketRef.current = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
     socketRef.current.connect();
