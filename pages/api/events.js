@@ -1,5 +1,5 @@
 import { connectToDatabase } from '../../util/mongodb';
-import io from '../../socket'; // Import the Socket.IO instance
+import io from '../../util/socket'; // Import the Socket.IO instance
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
