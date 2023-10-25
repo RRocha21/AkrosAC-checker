@@ -8,7 +8,7 @@ const handle = app.getRequestHandler();
 const server = express();
 const httpServer = http.createServer(server);
 const socket = require('./util/socket');
-const io = socket.init(server);
+const io = socket.init(httpServer);
 
 app.prepare().then(() => {
   
