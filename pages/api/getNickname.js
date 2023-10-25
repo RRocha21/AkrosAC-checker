@@ -52,7 +52,7 @@ async function authorize() {
     console.log('Attempting to load credentials from:', credentialsPath);
     
     const auth = new google.auth.GoogleAuth({
-        keyFile: './akrosac-37c432f5c235.json', // Update this with the path to your credentials file
+        keyFile: credentialsPath, // Update this with the path to your credentials file
         scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
 
