@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 async function getSteamUsername(steamUID) {
   try {
-    const response = await fetch(`/api/getSteamUsername?steamUID=${steamUID}`);
+    const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getSteamUsername?steamUID=${steamUID}`);
     if (response.ok) {
       const data = await response.json();
       return data.username;
@@ -41,22 +41,23 @@ export default function Home() {
 
       const userId = data.data?.userId;
       const actionId = data.id; // assuming you get actionId (3 for add, 4 for remove)
-
+      // const username = await getSteamUsername('76561198262506391');
+      // console.log('Username:', username);
       if (userId && actionId) {
-        const username = await getSteamUsername(userId);
-        console.log('Username:', username);
+        // const username = await getSteamUsername(userId);
+        // console.log('Username:', username);
         if ( actionId === 3) {
           // Add username to array if not already present
           setUsernames((prevUsernames) => {
-            if (!prevUsernames.includes(username)) {
-              return [...prevUsernames, username];
+            if (!prevUsernames.includes(userId)) {
+              return [...prevUsernames, userId];
             }
             return prevUsernames;
           });
         } else if (actionId === 4) {
           // Remove username from array if present
           setUsernames((prevUsernames) => {
-            return prevUsernames.filter((u) => u !== username);
+            return prevUsernames.filter((u) => u !== userId);
           });
         }
       }
