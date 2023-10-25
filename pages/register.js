@@ -11,9 +11,10 @@ import io from 'socket.io-client';
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 
+const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
+
 export default function Home({}) {
   useEffect(() => {
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
@@ -33,7 +34,7 @@ export async function getStaticProps({ params }) {
 
     try {
       const params2 = {
-        'licenseKey': process.env.NEXT_PUBLIC_LICENSE_KEY,
+        'licenseKey': '62e448abcd415a26',
         'serviceId': 'CS2',
       };
 
