@@ -48,11 +48,11 @@ export default async function handler(req, res) {
 
 async function authorize() {
 
-    const credentialsPath = path.resolve(__dirname, 'credentials.json');
-    console.log('Attempting to load credentials from:', credentialsPath);
+    // const credentialsPath = path.resolve(__dirname, 'credentials.json');
+    // console.log('Attempting to load credentials from:', credentialsPath);
     
     const auth = new google.auth.GoogleAuth({
-        keyFile: credentialsPath, // Update this with the path to your credentials file
+        keyFile: 'credentials.json', // Update this with the path to your credentials file
         scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
 
