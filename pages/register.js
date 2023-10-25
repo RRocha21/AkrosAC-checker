@@ -12,19 +12,13 @@ import io from 'socket.io-client';
 const port = parseInt(process.env.PORT, 10) || 3000;
 
 async function getSteamUsername(steamUID) {
-  const apiKey = '8D84EBFF5DCB6429F357949D448F406F';
-  const url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamUID}`;
-  console.log('URL:', url);
   try {
-    const response = await axios.get(url);
-    console.log('Response:', response);
-    const players = response.players;
-    if (players.length > 0) {
-      const username = players[0].personaname;
-      console.log('Steam Username:', username);
-      return username;
+    const response = await fetch(`/api/getSteamUsername?steamUID=${steamUID}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data.username;
     } else {
-      console.log('User not found');
+      console.error('User not found');
       return null;
     }
   } catch (error) {
@@ -33,33 +27,56 @@ async function getSteamUsername(steamUID) {
   }
 }
 
-export default function Home({}) {
-  const [events, setEvents] = useState([]);
+
+export default function Home() {
+  const [usernames, setUsernames] = useState([]);
+  const [events, setEvents] = useState([]); // assuming you need to use events
+
   useEffect(() => {
     const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
-    socket.connect()
+    socket.connect();
 
     socket.on('event', async (data) => {
       console.log('Event received:', data);
-      // Here you can set the state or call functions in your component
-      const username = await getSteamUsername('76561198262506391');
-      console.log('Username:', username);
-      if (data.data?.userId) {
-        console.log('User ID:', data.data.userId)
-        const username = await getSteamUsername(data.data.userId);
+
+      const userId = data.data?.userId;
+      const actionId = data.id; // assuming you get actionId (3 for add, 4 for remove)
+
+      if (userId && actionId) {
+        const username = await getSteamUsername(userId);
         console.log('Username:', username);
+        if ( actionId === 3) {
+          // Add username to array if not already present
+          setUsernames((prevUsernames) => {
+            if (!prevUsernames.includes(username)) {
+              return [...prevUsernames, username];
+            }
+            return prevUsernames;
+          });
+        } else if (actionId === 4) {
+          // Remove username from array if present
+          setUsernames((prevUsernames) => {
+            return prevUsernames.filter((u) => u !== username);
+          });
+        }
       }
     });
-    
-
-
 
     return () => {
       socket.disconnect();
     };
   }, []);
-  
 
+  return (
+    <div>
+      <h1>Usernames</h1>
+      {usernames.length > 0 ? (
+        <p>{usernames.join(', ')}</p>
+      ) : (
+        <p>No usernames available</p>
+      )}
+    </div>
+  );
 }
 
 export async function getStaticProps({ params }) {
