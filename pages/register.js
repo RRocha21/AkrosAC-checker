@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
 
     try {
       const params2 = {
-        'licenseKey': process.env.NEXT_PUBLIC_LICENSE_KEY,
+        'licenseKey': '62e448abcd415a26',
         'serviceId': 'CS2',
       };
 
@@ -51,7 +51,7 @@ export async function getStaticProps({ params }) {
         'gameProcess': 'cs2.exe'
       };
 
-      const responseFromRegister = await axios.delete('https://secure-api.akros.ac/v1/IWebHook/Unregister?secret=testshitout&uri=https://king-prawn-app-9ucth.ondigitalocean.app/api/events', paramsToRegister);
+      const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Unregister', paramsToRegister);
       console.log('Registration Response:', responseFromRegister.data);
     } catch (error) {
       console.error('Error registering webhook:', error);
