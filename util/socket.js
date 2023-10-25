@@ -1,25 +1,24 @@
-// socket.js
-const Express = require('express');
-const app = Express();
-const http = require('http').Server(app);
+const express = require('express');
+const app = express();
 const Cors = require('cors');
-const io = require('socket.io')(http, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: [],
-    credentials: true,
-  },
-});
+const socketIo = require('socket.io');
 
 app.use(Cors());
 
-app.listen(8080, async () => {
-  try {
-    console.log('listening on *:8080');
-  } catch (error) {
-    console.log(error);
-  }
-});
+module.exports = (httpServer) => {
+  const io = socketIo(httpServer, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: [],
+      credentials: true,
+    },
+  });
 
-module.exports = io; // Export the Socket.IO instance
+  // Add your socket event listeners here
+  io.on('connection', (socket) => {
+    console.log('Client connected');
+  });
+
+  return io; // Optional: Return io if you need to use it elsewhere
+};
