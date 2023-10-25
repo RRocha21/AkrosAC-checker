@@ -37,24 +37,23 @@ export default function Home() {
     socketRef.current = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
     socketRef.current.connect();
 
-    socketRef.current.on('event', (data) => {
+    socketRef.current.on('event', async (data) => {
       console.log('Event received:', data);
       const userId = data.data?.userId;
       const actionId = data.id;
       const gameProcess = data.data?.gameProcess;
-
-      if (userId && actionId) {
-        setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId }]);
+      const usename = await getSteamUsername(userId);
+      if (userId && actionId && username) {
+        setBuffer((prevBuffer) => [...prevBuffer, { userId, actionId, username }]);
       }
     });
 
     const updateInterval = setInterval(() => {
-      setBuffer(async (prevBuffer) => {
+      setBuffer((prevBuffer) => {
         if (prevBuffer.length > 0) {
-          const { userId, actionId } = prevBuffer[0];
-          console.log('Processing buffer:', userId, actionId);
+          const { userId, actionId, username } = prevBuffer[0];
+          console.log('Processing buffer:', userId, actionId, username);
           if (actionId === 3) {
-            const username = await getSteamUsername(userId)
             setUsernames((prevUsernames) => {
               if (!prevUsernames.includes(username)) {
                 return [...prevUsernames, username];
