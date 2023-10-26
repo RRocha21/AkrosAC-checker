@@ -48,8 +48,8 @@ async function handleTeamSelect(teamName) {
     const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
     if (response.ok) {
       const data = await response.json();
-      console.log('data', data)
-      return data;
+      console.log('data', data.players)
+      return data.players;
     } else {
       console.error('Team not found');
       return null;
@@ -166,8 +166,8 @@ export default function Home({teamNames}) {
       <div>
         <h2>{teamOne?.name} Players Team One</h2>
         <ul>
-          {teamOnePlayers.map((player) => (
-            <li key={player.uuid}>
+          {teamOnePlayers.map((player, index) => (
+            <li key={index}>
               {player.name}
               {/* Add status circle here */}
             </li>
@@ -177,9 +177,9 @@ export default function Home({teamNames}) {
       <div>
         <h2>{teamTwo?.name} Players Team Two</h2>
         <ul>
-          {teamTwoPlayers.map((player) => (
-            <li key={player.uuid}>
-              {player.name}
+          {teamTwoPlayers.map((player, index) => (
+            <li key={index}>
+              {player}
               {/* Add status circle here */}
             </li>
           ))}
