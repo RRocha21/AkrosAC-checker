@@ -67,7 +67,9 @@ export default function Home({teamNames}) {
   const [teamOnePlayers, setTeamOnePlayers] = useState([]);
   const [teamTwoPlayers, setTeamTwoPlayers] = useState([]);
   const [logs, setLogs] = useState([]);
-  const socketRef = useRef(null);
+  const [usernames, setUsernames] = useState([]);
+  const [buffer, setBuffer] = useState([]);
+  const socketRef = useRef(null); // useRef to keep the socket instance
 
   useEffect(() => {
     socketRef.current = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);

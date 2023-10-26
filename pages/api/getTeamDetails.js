@@ -21,7 +21,6 @@ export default async function handler(req, res) {
 
       const response = await sheets.spreadsheets.values.get({ spreadsheetId, range });
       const rows = response.data.values;
-      console.log('rows', rows)
       if (rows.length) {
         // Initialize an array to store the team names
         const players = [];
@@ -31,15 +30,16 @@ export default async function handler(req, res) {
         if (teamRowIndex !== -1) {
           for (let i = 0; i < 5; i++) {
             const currentPlayerRow = rows[teamRowIndex + i];
+            console.log('currentPlayerRow', currentPlayerRow)
             if (currentPlayerRow) {
-              const steamId = currentPlayerRow[7]; // Assuming 'H' corresponds to index 7
-              const nickname = currentPlayerRow[5]; // Assuming 'F' corresponds to index 5
+              const steamId = currentPlayerRow[6]; // Assuming 'H' corresponds to index 7
+              const nickname = currentPlayerRow[4]; // Assuming 'F' corresponds to index 5
               players.push({ steamId, nickname });
             }
           }
         }
         // Iterate through the rows of the sheet
-        
+        console.log('players', players)
         // Check if we found any teams
         if (players.length > 0) {
           // Send the team names back in the response
