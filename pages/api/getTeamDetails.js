@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
       // ID of the Google Sheets document and the name of the sheet.
       const spreadsheetId = '1GcB2hrsFo2KqTS_HyUENS3wvJN74-kUOp42r_dq11w0';
-      const range = 'Sheet1!B:H';  // Update with your range. Assuming column A has SteamUIDs and B has nicknames.
+      const range = 'Sheet1!C:H';  // Update with your range. Assuming column A has SteamUIDs and B has nicknames.
 
       const response = await sheets.spreadsheets.values.get({ spreadsheetId, range });
       const rows = response.data.values;
@@ -32,8 +32,8 @@ export default async function handler(req, res) {
             const currentPlayerRow = rows[teamRowIndex + i];
             console.log('currentPlayerRow', currentPlayerRow)
             if (currentPlayerRow) {
-              const steamId = currentPlayerRow[6]; // Assuming 'H' corresponds to index 7
-              const nickname = currentPlayerRow[4]; // Assuming 'F' corresponds to index 5
+              const steamId = currentPlayerRow[5]; // Assuming 'H' corresponds to index 7
+              const nickname = currentPlayerRow[3]; // Assuming 'F' corresponds to index 5
               players.push({ steamId, nickname });
             }
           }
