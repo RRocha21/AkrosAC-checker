@@ -43,11 +43,15 @@ async function getNickname(steamUID) {
   }
 }
 
+export default function Home(teamNames) {
+  const [teams, setTeams] = useState(teamNames);
+  const [teamOne, setTeamOne] = useState(null);
+  const [teamTwo, setTeamTwo] = useState(null);
+  const [teamOnePlayers, setTeamOnePlayers] = useState([]);
+  const [teamTwoPlayers, setTeamTwoPlayers] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const socketRef = useRef(null);
 
-export default function Home() {
-  const [usernames, setUsernames] = useState([]);
-  const [buffer, setBuffer] = useState([]);
-  const socketRef = useRef(null); // useRef to keep the socket instance
   useEffect(() => {
     socketRef.current = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
     socketRef.current.connect();
@@ -91,21 +95,96 @@ export default function Home() {
       if (socketRef.current) socketRef.current.disconnect();
     };
   }, []);
+  
+
+  const handleTeamSelect = async (teamId, setTeamFunction, setPlayersFunction) => {
+    try {
+      const response = await fetch(`/api/getTeamDetails?teamId=${teamId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setTeamFunction(data.team);
+        setPlayersFunction(data.players);
+      }
+    } catch (error) {
+      console.error('Error fetching team details:', error);
+    }
+  };
+
+  const handleTeamOneSelect = (event) => {
+    const teamId = event.target.value;
+    handleTeamSelect(teamId, setTeamOne, setTeamOnePlayers);
+  };
+
+  const handleTeamTwoSelect = (event) => {
+    const teamId = event.target.value;
+    handleTeamSelect(teamId, setTeamTwo, setTeamTwoPlayers);
+  };
 
   return (
     <div>
       <h1>Usernames</h1>
-      {usernames.length > 0 ? (
-        <div>{usernames.map((username) => <div key={username}>{username}</div>)}</div>
-      ) : (
-        <p>No usernames available</p>
-      )}
+    </div>
+  );
+  return (
+    <div>
+      {/* Teams selection */}
+      <div>
+        <label>
+          Team One:
+          <select onChange={handleTeamOneSelect} value={teamOne?.id || ''}>
+            <option value="">Select a team</option>
+            {teams.map((team, index) => (
+              <div key={index}>
+                {team.name}
+              </div>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          Team Two:
+          <select onChange={handleTeamTwoSelect} value={teamTwo?.id || ''}>
+            <option value="">Select a team</option>
+            {teams.map((team, index) => (
+              <div key={index}>
+                {team.name}
+              </div>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {/* Players display */}
+      <div>
+        <h2>{teamOne?.name} Players Team One</h2>
+        <ul>
+          {teamOnePlayers.map((player) => (
+            <li key={player.uuid}>
+              {player.name} - {player.uuid}
+              {/* Add status circle here */}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>{teamTwo?.name} Players Team Two</h2>
+        <ul>
+          {teamTwoPlayers.map((player) => (
+            <li key={player.uuid}>
+              {player.name} - {player.uuid}
+              {/* Add status circle here */}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
 export async function getStaticProps({ params }) {
     const { db } = await connectToDatabase();
+    let teamNames = [];
 
     try {
       const params2 = {
@@ -133,13 +212,21 @@ export async function getStaticProps({ params }) {
       
       const responseFromRegister = await axios.post('https://secure-api.akros.ac/v1/IWebHook/Register', paramsToRegister);
       console.log('Registration Response:', responseFromRegister.data);
+
+
+      const responseFromTeams = await axios.get('http://localhost:3000/api/getTeams');
+      if (responseFromTeams.status === 200) {
+          teamNames = responseFromTeams.data;
+          console.log('teamNames', teamNames);
+      } else {
+          console.error('Teams not found');
+      }
+
+
     } catch (error) {
       console.error('Error registering webhook:', error);
     }
-
     return {
-      props: {
-        events: [],
-      },
+      props: {teamNames: teamNames},
     };
 }
