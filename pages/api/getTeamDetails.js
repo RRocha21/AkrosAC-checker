@@ -30,16 +30,14 @@ export default async function handler(req, res) {
         if (teamRowIndex !== -1) {
           for (let i = 0; i < 5; i++) {
             const currentPlayerRow = rows[teamRowIndex + i];
-            console.log('currentPlayerRow', currentPlayerRow)
             if (currentPlayerRow) {
               const steamId = currentPlayerRow[5]; // Assuming 'H' corresponds to index 7
               const nickname = currentPlayerRow[3]; // Assuming 'F' corresponds to index 5
-              players.push({ steamId, nickname });
+              players.push(nickname);
             }
           }
         }
         // Iterate through the rows of the sheet
-        console.log('players', players)
         // Check if we found any teams
         if (players.length > 0) {
           // Send the team names back in the response

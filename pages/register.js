@@ -107,7 +107,7 @@ export default function Home({teamNames}) {
         }
         return prevBuffer;
       });
-    }, 30000); // 30 seconds interval
+    }, 1000); // 30 seconds interval
 
     return () => {
       clearInterval(updateInterval);
@@ -117,23 +117,21 @@ export default function Home({teamNames}) {
   
 
 
-  const handleTeamOneSelect = (event) => {
+  const handleTeamOneSelect = async (event) => {
     const teamId = event.target.value;
     setTeamOne(teamId);
-    handleTeamSelect(teamId);
+    const players = await handleTeamSelect(teamId);
+    setTeamOnePlayers(players)
   };
 
-  const handleTeamTwoSelect = (event) => {
+  const handleTeamTwoSelect = async (event) => {
     const teamId = event.target.value;
     setTeamTwo(teamId);
     handleTeamSelect(teamId);
+    const players = await handleTeamSelect(teamId);
+    setTeamTwoPlayers(players)
   };
 
-  // return (
-  //   <div>
-  //     <h1>Usernames</h1>
-  //   </div>
-  // );
   return (
     <div>
       {/* Teams selection */}
@@ -170,7 +168,7 @@ export default function Home({teamNames}) {
         <ul>
           {teamOnePlayers.map((player) => (
             <li key={player.uuid}>
-              {player.name} - {player.uuid}
+              {player.name}
               {/* Add status circle here */}
             </li>
           ))}
@@ -181,7 +179,7 @@ export default function Home({teamNames}) {
         <ul>
           {teamTwoPlayers.map((player) => (
             <li key={player.uuid}>
-              {player.name} - {player.uuid}
+              {player.name}
               {/* Add status circle here */}
             </li>
           ))}
