@@ -48,7 +48,6 @@ async function handleTeamSelect(teamName) {
     const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
     if (response.ok) {
       const data = await response.json();
-      console.log('data', data.players)
       return data.players;
     } else {
       console.error('Team not found');
@@ -76,7 +75,7 @@ export default function Home({teamNames}) {
     socketRef.current.connect();
 
     socketRef.current.on('event', async (data) => {
-      console.log('Event received:', data);
+      // console.log('Event received:', data);
       const userId = data.data?.userId;
       const actionId = data.id;
       const gameProcess = data.data?.gameProcess;
@@ -90,7 +89,7 @@ export default function Home({teamNames}) {
       setBuffer((prevBuffer) => {
         if (prevBuffer.length > 0) {
           const { userId, actionId, username } = prevBuffer[0];
-          console.log('Processing buffer:', userId, actionId, username);
+          // console.log('Processing buffer:', userId, actionId, username);
           if (actionId === 3) {
             setUsernames((prevUsernames) => {
               if (!prevUsernames.includes(username)) {
@@ -240,7 +239,7 @@ export async function getStaticProps({ params }) {
       const responseFromTeams = await axios.get('https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeams');
       if (responseFromTeams.status === 200) {
           teamNames = responseFromTeams.data.teams;
-          console.log('teamNames', teamNames);
+          // console.log('teamNames', teamNames);
       } else {
           console.error('Teams not found');
       }

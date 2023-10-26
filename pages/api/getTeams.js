@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
       const response = await sheets.spreadsheets.values.get({ spreadsheetId, range });
       const rows = response.data.values;
-      console.log('rows', rows)
+      // console.log('rows', rows)
       if (rows.length) {
         // Initialize an array to store the team names
         const teams = [];
