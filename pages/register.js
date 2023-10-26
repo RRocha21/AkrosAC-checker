@@ -29,7 +29,7 @@ async function getSteamUsername(steamUID) {
 
 async function getNickname(steamUID) {
   try {
-    const response = await fetch(`/api/getNickname?steamUID=${steamUID}`);
+    const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getNickname?steamUID=${steamUID}`);
     if (response.ok) {
       const data = await response.json();
       return data.nickname;
@@ -43,8 +43,8 @@ async function getNickname(steamUID) {
   }
 }
 
-export default function Home(teamNames) {
-  const [teams, setTeams] = useState(teamNames);
+export default function Home({teamNames}) {
+  const [teams, setTeams] = useState(teamNames || []);
   const [teamOne, setTeamOne] = useState(null);
   const [teamTwo, setTeamTwo] = useState(null);
   const [teamOnePlayers, setTeamOnePlayers] = useState([]);
@@ -97,12 +97,12 @@ export default function Home(teamNames) {
   }, []);
   
 
-  const handleTeamSelect = async (teamId, setTeamFunction, setPlayersFunction) => {
+  const handleTeamSelect = async (teamName, setTeamFunction, setPlayersFunction) => {
     try {
-      const response = await fetch(`/api/getTeamDetails?teamId=${teamId}`);
+      const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
       if (response.ok) {
         const data = await response.json();
-        setTeamFunction(data.team);
+        setTeamFunction(teamName);
         setPlayersFunction(data.players);
       }
     } catch (error) {
@@ -120,23 +120,23 @@ export default function Home(teamNames) {
     handleTeamSelect(teamId, setTeamTwo, setTeamTwoPlayers);
   };
 
-  return (
-    <div>
-      <h1>Usernames</h1>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h1>Usernames</h1>
+  //   </div>
+  // );
   return (
     <div>
       {/* Teams selection */}
       <div>
         <label>
           Team One:
-          <select onChange={handleTeamOneSelect} value={teamOne?.id || ''}>
+          <select onChange={handleTeamOneSelect} value={teamOne || ''}>
             <option value="">Select a team</option>
             {teams.map((team, index) => (
-              <div key={index}>
-                {team.name}
-              </div>
+              <option key={index} value={team}>
+                {team}
+              </option>
             ))}
           </select>
         </label>
@@ -144,12 +144,12 @@ export default function Home(teamNames) {
       <div>
         <label>
           Team Two:
-          <select onChange={handleTeamTwoSelect} value={teamTwo?.id || ''}>
+          <select onChange={handleTeamTwoSelect} value={teamOne || ''}>
             <option value="">Select a team</option>
             {teams.map((team, index) => (
-              <div key={index}>
-                {team.name}
-              </div>
+              <option key={index} value={team}>
+                {team}
+              </option>
             ))}
           </select>
         </label>
@@ -214,9 +214,9 @@ export async function getStaticProps({ params }) {
       console.log('Registration Response:', responseFromRegister.data);
 
 
-      const responseFromTeams = await axios.get('http://localhost:3000/api/getTeams');
+      const responseFromTeams = await axios.get('https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeams');
       if (responseFromTeams.status === 200) {
-          teamNames = responseFromTeams.data;
+          teamNames = responseFromTeams.data.teams;
           console.log('teamNames', teamNames);
       } else {
           console.error('Teams not found');
