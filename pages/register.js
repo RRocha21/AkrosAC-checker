@@ -177,6 +177,10 @@ export default function Home({teamNames}) {
                 }}
               />
               {player}
+              {index === 5 && ' - Stand in'}
+              {index === 6 && ' - Coach'}
+              {index === 7 && ' - Assistant Coach'}
+              {index === 8 && ' - Manager'}
             </li>
           ))}
         </ul>
@@ -195,7 +199,11 @@ export default function Home({teamNames}) {
                   backgroundColor: usernames.includes(player) ? 'green' : 'red',
                 }}
               />
-              {player}
+              {player} 
+              {index === 5 && ' - Stand in'}
+              {index === 6 && ' - Coach'}
+              {index === 7 && ' - Assistant Coach'}
+              {index === 8 && ' - Manager'}
             </li>
           ))}
         </ul>

@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         const teamRowIndex = rows.findIndex(row => row[0] === teamName);
 
         if (teamRowIndex !== -1) {
-          for (let i = 0; i < 5; i++) {
+          for (let i = 0; i < 9; i++) {
             const currentPlayerRow = rows[teamRowIndex + i];
             if (currentPlayerRow) {
               const steamId = currentPlayerRow[5]; // Assuming 'H' corresponds to index 7
