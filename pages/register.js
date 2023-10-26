@@ -43,6 +43,23 @@ async function getNickname(steamUID) {
   }
 }
 
+async function handleTeamSelect(teamName) {
+  try {
+    const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log('data', data)
+      return data;
+    } else {
+      console.error('Team not found');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching team details:', error);
+    return null;
+  }
+};
+
 export default function Home({teamNames}) {
   const [teams, setTeams] = useState(teamNames || []);
   const [teamOne, setTeamOne] = useState(null);
@@ -97,27 +114,17 @@ export default function Home({teamNames}) {
   }, []);
   
 
-  const handleTeamSelect = async (teamName, setTeamFunction, setPlayersFunction) => {
-    try {
-      const response = await fetch(`https://king-prawn-app-9ucth.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
-      if (response.ok) {
-        const data = await response.json();
-        setTeamFunction(teamName);
-        setPlayersFunction(data.players);
-      }
-    } catch (error) {
-      console.error('Error fetching team details:', error);
-    }
-  };
 
   const handleTeamOneSelect = (event) => {
     const teamId = event.target.value;
-    handleTeamSelect(teamId, setTeamOne, setTeamOnePlayers);
+    setTeamOne(teamId);
+    handleTeamSelect(teamId);
   };
 
   const handleTeamTwoSelect = (event) => {
     const teamId = event.target.value;
-    handleTeamSelect(teamId, setTeamTwo, setTeamTwoPlayers);
+    setTeamTwo(teamId);
+    handleTeamSelect(teamId);
   };
 
   // return (
@@ -144,7 +151,7 @@ export default function Home({teamNames}) {
       <div>
         <label>
           Team Two:
-          <select onChange={handleTeamTwoSelect} value={teamOne || ''}>
+          <select onChange={handleTeamTwoSelect} value={teamTwo || ''}>
             <option value="">Select a team</option>
             {teams.map((team, index) => (
               <option key={index} value={team}>
