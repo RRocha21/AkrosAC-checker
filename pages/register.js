@@ -167,9 +167,17 @@ export default function Home({teamNames}) {
         <h2>{teamOne?.name} Players Team One</h2>
         <ul>
           {teamOnePlayers.map((player, index) => (
-            <li key={index}>
-              {player.name}
-              {/* Add status circle here */}
+            <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  marginRight: '10px',
+                  backgroundColor: usernames.includes(player) ? 'green' : 'red',
+                }}
+              />
+              {player}
             </li>
           ))}
         </ul>
@@ -178,9 +186,17 @@ export default function Home({teamNames}) {
         <h2>{teamTwo?.name} Players Team Two</h2>
         <ul>
           {teamTwoPlayers.map((player, index) => (
-            <li key={index}>
+            <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  marginRight: '10px',
+                  backgroundColor: usernames.includes(player) ? 'green' : 'red',
+                }}
+              />
               {player}
-              {/* Add status circle here */}
             </li>
           ))}
         </ul>
