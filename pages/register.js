@@ -13,7 +13,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 
 async function getSteamUsername(steamUID) {
   try {
-    const response = await fetch(`https://monkfish-app-map3w.ondigitalocean.app/api/getSteamUsername?steamUID=${steamUID}`);
+    const response = await fetch(`https://plankton-app-9qk6c.ondigitalocean.app/api/getSteamUsername?steamUID=${steamUID}`);
     if (response.ok) {
       const data = await response.json();
       return data.username;
@@ -29,7 +29,7 @@ async function getSteamUsername(steamUID) {
 
 async function getNickname(steamUID) {
   try {
-    const response = await fetch(`https://monkfish-app-map3w.ondigitalocean.app/api/getNickname?steamUID=${steamUID}`);
+    const response = await fetch(`https://plankton-app-9qk6c.ondigitalocean.app/api/getNickname?steamUID=${steamUID}`);
     if (response.ok) {
       const data = await response.json();
       return data.nickname;
@@ -45,7 +45,7 @@ async function getNickname(steamUID) {
 
 async function handleTeamSelect(teamName) {
   try {
-    const response = await fetch(`https://monkfish-app-map3w.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
+    const response = await fetch(`https://plankton-app-9qk6c.ondigitalocean.app/api/getTeamDetails?teamName=${teamName}`);
     if (response.ok) {
       const data = await response.json();
       return data.players;
@@ -71,7 +71,7 @@ export default function Home({teamNames}) {
   const socketRef = useRef(null); // useRef to keep the socket instance
 
   useEffect(() => {
-    socketRef.current = io(`https://monkfish-app-map3w.ondigitalocean.app`);
+    socketRef.current = io(`https://plankton-app-9qk6c.ondigitalocean.app`);
     socketRef.current.connect();
 
     socketRef.current.on('event', async (data) => {
@@ -236,7 +236,7 @@ export async function getStaticProps({ params }) {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
         'secret': 'testshitout',
-        'uri': 'https://monkfish-app-map3w.ondigitalocean.app/api/events',
+        'uri': 'https://plankton-app-9qk6c.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
       
@@ -244,7 +244,7 @@ export async function getStaticProps({ params }) {
       console.log('Registration Response:', responseFromRegister.data);
 
 
-      const responseFromTeams = await axios.get('https://monkfish-app-map3w.ondigitalocean.app/api/getTeams');
+      const responseFromTeams = await axios.get('https://plankton-app-9qk6c.ondigitalocean.app/api/getTeams');
       if (responseFromTeams.status === 200) {
           teamNames = responseFromTeams.data.teams;
           // console.log('teamNames', teamNames);
