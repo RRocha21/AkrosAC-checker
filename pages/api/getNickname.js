@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 }
 
 async function authorize() {
-    const credentialsPath = path.resolve(__dirname, '@/credentials.json');
+    const credentialsPath = path.resolve(__dirname, '../../../../credentials.json');
     console.log('Attempting to load credentials from:', credentialsPath);
     
     const auth = new google.auth.GoogleAuth({
