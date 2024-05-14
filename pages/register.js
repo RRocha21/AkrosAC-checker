@@ -14,7 +14,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 export default function Home({}) {
   useEffect(() => {
     // const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`, { transports: ['websocket'] });
-    const socket = io(`https://king-prawn-app-9ucth.ondigitalocean.app`);
+    const socket = io(`https://plankton-app-kjs3q.ondigitalocean.app`);
 
     socket.on('event', (data) => {
       console.log('Event received:', data);
@@ -45,7 +45,7 @@ export async function getStaticProps({ params }) {
         'licenseKey': '62e448abcd415a26',
         'serviceId': 'default',
         'secret': 'testshitout',
-        'uri': 'https://king-prawn-app-9ucth.ondigitalocean.app/api/events',
+        'uri': 'https://plankton-app-kjs3q.ondigitalocean.app/api/events',
         'gameProcess': 'cs2.exe'
       };
 
